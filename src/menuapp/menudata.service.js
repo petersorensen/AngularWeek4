@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('MenuData')
+angular.module('Data')
 .service('MenuDataService', MenuDataService);
 
 MenuDataService.$inject = ['$stateParams','$http', 'ApiBasePath']
@@ -17,7 +17,7 @@ function MenuDataService($stateParams,$http, ApiBasePath) {
     });
     return response;
   };
-  
+
   service.getItemsForCategory = function (categoryShortName) {
     var response = $http({
       method: "GET",
