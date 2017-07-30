@@ -12,7 +12,7 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
 
   // *** Set up UI states ***
   $stateProvider
-  
+
   // Home page
   .state('home', {
     url: '/',
@@ -21,29 +21,25 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   .state('categoryMenu', {
     url: '/category-menu',
     templateUrl: 'src/menuapp/templates/menuapp.template.html',
-    controller: 'MenuAppController as categoryMenu',
+    controller: 'MenuAppCategoryController as categoryMenu2',
     resolve: {
       categories: ['MenuDataService', function (MenuDataService) {
         return MenuDataService.getAllCategories();
-      }] //,
-      // items2: ['ItemListService', function (ItemListService) {
-      //   return ItemListService.getItems().menu_items;
-      // }]
+      }]
     }
   })
-  console.log("home configured");
-  console.log("categoryMenu configured");
 
-  // .state('itemMenu', {
-  //   url: '/item-menu/item-menu/{categoryShortName}',
-  //   templateUrl: 'src/menuapp/templates/menuapp.template.html',
-  //   controller: 'MenuAppController as itemMenu',
-  //   resolve: {
-  //     items: ['MenuDataService', function (MenuDataService) {
-  //       return MenuDataService.getItemsForCategory(categoryShortName);
-  //     }]
-  //   }
-  // });
+  .state('itemMenu', {
+    url: '/item-menu/{categoryShortName}',
+    templateUrl: 'src/menuapp/templates/menuappdishes.template.html',
+    controller: 'MenuAppDishesController as itemMenu2',
+    resolve: {
+      myitems: ['$stateParams','MenuDataService', function ($stateParams,MenuDataService) {
+        console.log("'itemMenu' finder myitems for "+ "'"+$stateParams.categoryShortName+"'")
+        return MenuDataService.getItemsForCategory($stateParams.categoryShortName);
+      }]
+    }
+  });
 }
 
 })();
